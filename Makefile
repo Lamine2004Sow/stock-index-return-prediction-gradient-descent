@@ -29,6 +29,14 @@ install: $(VENV_BIN)/pip requirements.txt
 	$(VENV_BIN)/pip install --upgrade pip
 	$(VENV_BIN)/pip install -r requirements.txt
 
-# Rule to clean up the virtual environment
+# Rule to clean up the virtual environment and generated artifacts
 clean:
 	-$(RM) $(VENV)
+	-$(RM) __pycache__
+	-$(RM) .pytest_cache
+	-$(RM) .mypy_cache
+	-$(RM) .ipynb_checkpoints
+	-find . -type d -name "__pycache__" -prune -exec rm -rf {} +
+	-find . -type d -name ".ipynb_checkpoints" -prune -exec rm -rf {} +
+	-find . -type f -name "*.pyc" -delete
+	-find . -type f -name ".DS_Store" -delete
